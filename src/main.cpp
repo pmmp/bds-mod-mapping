@@ -349,6 +349,23 @@ static void generate_command_arg_types_table(ServerInstance *serverInstance) {
 	std::cout << "Generated command parameter ID mapping table" << std::endl;
 }
 
+static void generate_item_tags() {
+    auto tags = nlohmann::json::object();
+    for (const auto &pair: ItemRegistry::mTagToItemsMap) {
+        auto items = nlohmann::json::array();
+        for (const auto &item: pair.second) {
+            items.push_back(item->getFullItemName());
+        }
+        tags[pair.first.str] = items;
+    }
+
+    std::ofstream result("mapping_files/item_tags.json");
+    result << std::setw(4) << tags << std::endl;
+    result.close();
+
+    std::cout << "Generated item tags!" << std::endl;
+}
+
 extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	std::filesystem::create_directory("mapping_files");
 	generate_r12_to_current_block_map(serverInstance);
@@ -360,7 +377,9 @@ extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	generate_block_properties_table(serverInstance);
 
 	generate_old_to_current_palette_map(serverInstance);
+
 	generate_item_alias_mapping();
+    generate_item_tags();
 
 	generate_block_id_to_item_id_map(serverInstance);
 	generate_command_arg_types_table(serverInstance);
