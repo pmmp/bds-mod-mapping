@@ -379,7 +379,7 @@ extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	generate_old_to_current_palette_map(serverInstance);
 
 	generate_item_alias_mapping();
-    generate_item_tags();
+	generate_item_tags();
 
 	generate_block_id_to_item_id_map(serverInstance);
 	generate_command_arg_types_table(serverInstance);
