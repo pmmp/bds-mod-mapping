@@ -3,7 +3,6 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <functional>
 #include <unordered_set>
 #include "HashedString.h"
 #include "Memory.h"
