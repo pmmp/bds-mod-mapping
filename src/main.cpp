@@ -350,20 +350,20 @@ static void generate_command_arg_types_table(ServerInstance *serverInstance) {
 }
 
 static void generate_item_tags() {
-    auto tags = nlohmann::json::object();
-    for (const auto &pair: ItemRegistry::mTagToItemsMap) {
-        auto items = nlohmann::json::array();
-        for (const auto &item: pair.second) {
-            items.push_back(item->getFullItemName());
-        }
-        tags[pair.first.str] = items;
-    }
+	auto tags = nlohmann::json::object();
+	for (const auto &pair: ItemRegistry::mTagToItemsMap) {
+		auto items = nlohmann::json::array();
+		for (const auto &item: pair.second) {
+			items.push_back(item->getFullItemName());
+		}
+		tags[pair.first.str] = items;
+	}
 
-    std::ofstream result("mapping_files/item_tags.json");
-    result << std::setw(4) << tags << std::endl;
-    result.close();
+	std::ofstream result("mapping_files/item_tags.json");
+	result << std::setw(4) << tags << std::endl;
+	result.close();
 
-    std::cout << "Generated item tags!" << std::endl;
+	std::cout << "Generated item tags!" << std::endl;
 }
 
 extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {

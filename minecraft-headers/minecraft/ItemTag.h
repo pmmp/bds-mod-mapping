@@ -3,6 +3,6 @@
 #include "HashedString.h"
 
 struct ItemTag : public HashedString {
-public:
-    ItemTag(void);
+	public:
+		ItemTag(void);
 };
