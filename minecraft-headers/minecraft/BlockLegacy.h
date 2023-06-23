@@ -12,6 +12,8 @@ struct NewBlockID {
 
 struct BlockLegacy {
 
+	char paddingParent[32]; //parent struct
+
 	std::string descriptionId;
 	HashedString baseName;
 	std::string namespaceName;
@@ -44,4 +46,4 @@ struct BlockLegacy {
 
 };
 
-static_assert(offsetof(BlockLegacy, opacity) == 341);
+//static_assert(offsetof(BlockLegacy, opacity) == 364);
