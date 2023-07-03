@@ -17,6 +17,7 @@ struct BlockLegacy {
 	std::string namespaceName;
 	HashedString fullName;
 
+	Block *getBlockStateFromLegacyData(unsigned char) const;
 	Block *getStateFromLegacyData(unsigned short) const;
 	const NewBlockID getBlockID() const;
 

@@ -22,6 +22,8 @@
 #include <json.hpp>
 
 
+extern "C" void _ZN16BinaryDataOutputC2ER12BinaryStream(BinaryDataOutput*, BinaryStream*);
+
 void generate_r12_to_current_block_map(ServerInstance *serverInstance) {
 	auto palette = serverInstance->getMinecraft()->getLevel()->getBlockPalette();
 
@@ -34,30 +36,45 @@ void generate_r12_to_current_block_map(ServerInstance *serverInstance) {
 
 	auto stream = new BinaryStream();
 
+	BinaryDataOutput dataOutput;
+	_ZN16BinaryDataOutputC2ER12BinaryStream(&dataOutput, stream);
+
 	auto json = nlohmann::json::object();
 	input >> json;
 
+	int count = 0;
 	for (auto &object : json["minecraft"].items()) {
 		const auto &name = "minecraft:" + object.key();
 		auto blockLegacy = palette->getBlockLegacy(name);
+		if (blockLegacy == nullptr) {
+			continue;
+		}
 		for (auto &it : object.value()) {
 			auto state = it.get<unsigned short>();
 
 			if (name == "minecraft:cocoa" && state >= 12) {
-				continue;
+//				continue;
 			}
 
+//			auto block = blockLegacy->getBlockStateFromLegacyData(state);
 			auto block = blockLegacy->getStateFromLegacyData(state);
 
 			stream->writeUnsignedVarInt(name.length());
 			stream->write(name.c_str(), name.length());
 			stream->writeUnsignedShort(state);
-			stream->writeType(block->tag);
+
+			std::cout << "enter" << std::endl;
+			NbtIo::write(&block->tag, dataOutput);
+			std::cout << "exit" << std::endl;
+			count++;
+//			stream->writeType(block->tag);
 		}
 	}
 
+	std::cout << "writing file containing " << std::to_string(count) << " mappings" << std::endl;
 	std::ofstream output("mapping_files/r12_to_current_block_map.bin");
 	output << stream->buffer;
+	std::cout << "done writing file" << std::endl;
 	output.close();
 	delete stream;
 	std::cout << "Generated R12 block state mapping table" << std::endl;
@@ -115,7 +132,6 @@ static void generate_old_to_current_palette_map(ServerInstance *serverInstance) 
 	std::cout << "Generated " << std::to_string(generated) << " block state mapping tables" << std::endl;
 }
 
-extern "C" void _ZN16BinaryDataOutputC2ER12BinaryStream(BinaryDataOutput*, BinaryStream*);
 
 void generate_palette(ServerInstance *serverInstance) {
 	auto palette = serverInstance->getMinecraft()->getLevel()->getBlockPalette();
@@ -262,7 +278,7 @@ static void generate_particle_mapping() {
 extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	std::filesystem::create_directory("mapping_files");
 	//generate_item_mapping();
-	//generate_r12_to_current_block_map(serverInstance);
+	generate_r12_to_current_block_map(serverInstance);
 	generate_palette(serverInstance);
 	/*generate_biome_mapping(serverInstance);
 	generate_level_sound_mapping();
