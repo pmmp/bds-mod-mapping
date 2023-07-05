@@ -269,13 +269,25 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 
 	auto complex = nlohmann::json::object();
 
+	//The game itself often doesn't know what's considered a "valid" meta value for blocks
+	//and allows default fallthrus which spam the crap out of the result
+	std::map<std::string, short> hardcodedMaxMetaValues = {
+		{"minecraft:concrete", 16},
+		{"minecraft:log", 4},
+		{"minecraft:log2", 2}
+	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();
 
 		auto func = pair.second.mCallback;
 
 		auto zero = func(0).str;
-		for(short i = 0; i < 32767; i++){
+		auto limitPos = hardcodedMaxMetaValues.find(pair.first.str);
+		short limit = 32767;
+		if (limitPos != hardcodedMaxMetaValues.end()) {
+			limit = limitPos->second;
+		}
+		for(short i = 0; i < limit; i++){
 			auto iStr = func(i).str;
 			if (iStr != "" && (i == 0 || iStr != zero)) {
 				auto prefixed = add_prefix_if_necessary(iStr);
