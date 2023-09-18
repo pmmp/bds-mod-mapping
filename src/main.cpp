@@ -283,8 +283,12 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 	//and allows default fallthrus which spam the crap out of the result
 	std::map<std::string, short> hardcodedMaxMetaValues = {
 		{"minecraft:concrete", 16},
+		{"minecraft:concrete_powder", 16},
 		{"minecraft:log", 4},
-		{"minecraft:log2", 2}
+		{"minecraft:log2", 2},
+		{"minecraft:stained_glass", 16},
+		{"minecraft:stained_glass_pane", 16},
+		{"minecraft:stained_hardened_clay", 16},
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();

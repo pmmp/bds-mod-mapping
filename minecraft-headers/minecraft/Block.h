@@ -14,11 +14,11 @@ struct Block {
 
 	virtual ~Block() {}
 
-	char padding[26];
+	char padding[28];
 	unsigned short data;
 	BlockLegacy* blockLegacy;
 
-	char filler2[132];
+	char filler2[148];
 	BlockSerializationId tag;
 	char filler3[32];
 };
