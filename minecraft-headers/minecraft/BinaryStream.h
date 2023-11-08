@@ -11,12 +11,12 @@ struct BinaryStream : ReadOnlyBinaryStream {
 
 	void write(void const *, unsigned long);
 
-	void writeUnsignedShort(unsigned short);
+	void writeUnsignedShort(unsigned short, char const*, char const*);
 
-	void writeUnsignedVarInt(unsigned int);
+	void writeUnsignedVarInt(unsigned int, char const*, char const*);
 
 	template<typename T>
-	void writeType(const T &in) {
+	void writeType(const T &in, char const*, char const*) {
 		serialize<T>::write(in, *this);
 	}
 };

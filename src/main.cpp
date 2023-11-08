@@ -67,10 +67,10 @@ void generate_r12_to_current_block_map(ServerInstance *serverInstance) {
 				continue;
 			}
 
-			stream->writeUnsignedVarInt(name.length());
+			stream->writeUnsignedVarInt(name.length(), "", "");
 			stream->write(name.c_str(), name.length());
-			stream->writeUnsignedShort(state);
-			stream->writeType(block->tag);
+			stream->writeUnsignedShort(state, "", "");
+			stream->writeType(block->tag, "", "");
 		}
 	}
 
@@ -112,8 +112,8 @@ static void generate_old_to_current_palette_map_single(BlockPalette* palette, st
 		}
 		//TODO: compare and don't write if the states are the same
 		//right now it's easier to do this outside of the mod
-		output->writeType(state);
-		output->writeType(block->tag);
+		output->writeType(state, "", "");
+		output->writeType(block->tag, "", "");
 	}
 
 	mapping_file << output->buffer;
@@ -155,7 +155,7 @@ void generate_palette(ServerInstance *serverInstance) {
 	auto paletteStream = new BinaryStream();
 	for (unsigned int i = 0; i < numStates; i++) {
 		auto state = palette->getBlock(i);
-		paletteStream->writeType(state->tag);
+		paletteStream->writeType(state->tag, "", "");
 	}
 
 	std::ofstream paletteOutput("mapping_files/canonical_block_states.nbt");
