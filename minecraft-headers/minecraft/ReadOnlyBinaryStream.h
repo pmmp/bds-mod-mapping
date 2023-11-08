@@ -21,5 +21,5 @@ struct ReadOnlyBinaryStream {
 	ReadOnlyBinaryStream(std::string&& buffer);
 };
 
-static_assert(offsetof(ReadOnlyBinaryStream, buffer) == 56);
-static_assert(sizeof(ReadOnlyBinaryStream) == 64);
+static_assert(offsetof(ReadOnlyBinaryStream, buffer) == 48);
+static_assert(sizeof(ReadOnlyBinaryStream) == 56);

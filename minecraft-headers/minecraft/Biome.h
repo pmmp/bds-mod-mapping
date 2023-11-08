@@ -9,4 +9,3 @@ struct Biome {
 
 	virtual ~Biome(void);
 };
-static_assert(sizeof(std::string) == 32);

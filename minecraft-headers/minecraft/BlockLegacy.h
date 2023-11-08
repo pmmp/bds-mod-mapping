@@ -19,7 +19,7 @@ struct BlockLegacy {
 	std::string namespaceName;
 	HashedString fullName;
 
-	char padding[172];
+	char padding[156];
 	char unknown;
 	char opacity;
 	char brightness;

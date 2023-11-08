@@ -10,3 +10,4 @@ struct HashedString{
 	HashedString(std::string const & input);
 	HashedString(char const * input);
 };
+static_assert(sizeof(HashedString) == 40);

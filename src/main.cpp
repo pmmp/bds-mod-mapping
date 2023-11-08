@@ -29,9 +29,9 @@
 
 struct FilePrintStream : public PrintStream {
 
-	std::ofstream &mOutput;
+	std::ostream &mOutput;
 
-	FilePrintStream(std::ofstream &output) : mOutput(output) {}
+	FilePrintStream(std::ostream &output) : mOutput(output) {}
 	virtual void print(std::string const& string) const {
 		mOutput << string;
 	}
@@ -101,8 +101,15 @@ static void generate_old_to_current_palette_map_single(BlockPalette* palette, st
 	while(input->offset < length){
 		CompoundTag state = input->getType<CompoundTag>();
 
-		const Block* block = palette->getBlock(state);
+		auto result = BlockSerializationUtils::tryGetBlockFromNBT(state, nullptr);
+		const Block* block = result.second;
 
+		if (block == nullptr) {
+			FilePrintStream printer(std::cout);
+			std::cout << "error: the following state produced a NULL result from mapping" << std::endl;
+			state.print("", printer);
+			continue;
+		}
 		//TODO: compare and don't write if the states are the same
 		//right now it's easier to do this outside of the mod
 		output->writeType(state);

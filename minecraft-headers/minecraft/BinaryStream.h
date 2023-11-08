@@ -21,4 +21,4 @@ struct BinaryStream : ReadOnlyBinaryStream {
 	}
 };
 
-static_assert(sizeof(BinaryStream) == 104);
+static_assert(sizeof(BinaryStream) == 88); //correct with libc++ in 1.20.40
