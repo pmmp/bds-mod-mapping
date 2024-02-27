@@ -296,6 +296,8 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 		{"minecraft:stained_glass", 16},
 		{"minecraft:stained_glass_pane", 16},
 		{"minecraft:stained_hardened_clay", 16},
+		{"minecraft:hard_stained_glass", 16},
+		{"minecraft:hard_stained_glass_pane", 16}
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();
