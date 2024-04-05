@@ -300,7 +300,8 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 		{"minecraft:hard_stained_glass_pane", 16},
 		{"minecraft:leaves", 4},
 		{"minecraft:leaves2", 2},
-		{"minecraft:wood", 14} //6 types of wood stripped/unstripped - 14/15 should be omitted but aren't
+		{"minecraft:wood", 14}, //6 types of wood stripped/unstripped - 14/15 should be omitted but aren't
+		{"minecraft:sapling", 6}
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();

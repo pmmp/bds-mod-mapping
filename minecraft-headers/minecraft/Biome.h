@@ -4,7 +4,7 @@
 
 struct Biome {
 	HashedString name;
-	char filler[80];
+	char filler[72];
 	unsigned int biomeId;
 
 	virtual ~Biome(void);
