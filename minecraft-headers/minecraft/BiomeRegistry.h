@@ -6,5 +6,5 @@
 struct BiomeRegistry {
 	Biome* lookupById(int) const;
 
-	void forEachBiome(std::function<void(Biome &)>) const;
+	void forEachBiome(std::function<void(Biome const&)>) const;
 };

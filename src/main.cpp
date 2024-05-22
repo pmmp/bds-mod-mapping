@@ -215,7 +215,7 @@ void generate_biome_mapping(ServerInstance *server) {
 
 	auto map = nlohmann::json::object();
 
-	registry->forEachBiome([&map] (Biome &biome) {
+	registry->forEachBiome([&map] (Biome const&biome) {
 		auto id = biome.biomeId;
 		map[biome.name.str] = id;
 	});
@@ -301,7 +301,8 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 		{"minecraft:leaves", 4},
 		{"minecraft:leaves2", 2},
 		{"minecraft:wood", 14}, //6 types of wood stripped/unstripped - 14/15 should be omitted but aren't
-		{"minecraft:sapling", 6}
+		{"minecraft:sapling", 6},
+		{"minecraft:coral_block", 13} //13-15 are just tube again because of a default case in the code
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();
