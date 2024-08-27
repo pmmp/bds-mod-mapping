@@ -2,11 +2,11 @@
 
 #include <string>
 
-namespace Puv::Legacy {
+namespace SharedTypes::Legacy {
 enum class LevelSoundEvent;
 }
 
-using LevelSoundEvent = Puv::Legacy::LevelSoundEvent;
+using LevelSoundEvent = SharedTypes::Legacy::LevelSoundEvent;
 
 struct LevelSoundEventMap{
 	static std::string& getName(LevelSoundEvent type);

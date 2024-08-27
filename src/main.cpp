@@ -302,7 +302,9 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 		{"minecraft:leaves2", 2},
 		{"minecraft:wood", 14}, //6 types of wood stripped/unstripped - 14/15 should be omitted but aren't
 		{"minecraft:sapling", 6},
-		{"minecraft:coral_block", 13} //13-15 are just tube again because of a default case in the code
+		{"minecraft:coral_block", 13}, //13-15 are just tube again because of a default case in the code
+		{"minecraft:anvil", 12},
+		{"minecraft:quartz_block", 4}
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();
