@@ -18,7 +18,7 @@ struct Block {
 	unsigned short data;
 	BlockLegacy* blockLegacy;
 
-	char filler2[112];
+	char filler2[128];
 	BlockSerializationId tag;
 	char filler3[32];
 };
