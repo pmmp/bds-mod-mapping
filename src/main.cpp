@@ -304,7 +304,10 @@ static void generate_item_alias_mapping(ServerInstance *serverInstance) {
 		{"minecraft:sapling", 6},
 		{"minecraft:coral_block", 13}, //13-15 are just tube again because of a default case in the code
 		{"minecraft:anvil", 12},
-		{"minecraft:quartz_block", 4}
+		{"minecraft:quartz_block", 4},
+		{"minecraft:chemistry_table", 16},
+		{"minecraft:tnt", 4},
+		{"minecraft:purpur_block", 4}
 	};
 	for(auto pair : itemRegistry->mComplexAliasLookupMap) {
 		auto metaMap = nlohmann::json::object();
