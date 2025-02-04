@@ -192,13 +192,12 @@ static void generate_block_properties_table(ServerInstance *serverInstance) {
 		auto name = blockLegacy.getFullName();
 		auto data = nlohmann::json::object();
 		data["hardness"] = blockLegacy.getDestroySpeed();
-		data["mHardness"] = blockLegacy.hardness;
-		data["blastResistance"] = blockLegacy.blastResistance;
-		data["friction"] = blockLegacy.friction;
-		data["flammability"] = blockLegacy.flammability;
-		data["flameEncouragement"] = blockLegacy.flameEncouragement;
-		data["opacity"] = blockLegacy.opacity;
-		data["brightness"] = blockLegacy.brightness;
+		data["blastResistance"] = blockLegacy.getExplosionResistance();
+		data["friction"] = blockLegacy.getFriction();
+		data["flammability"] = blockLegacy.getFlameOdds();
+		data["flameEncouragement"] = blockLegacy.getBurnOdds();
+		data["opacity"] = 1.0 - blockLegacy.getTranslucency();
+		data["brightness"] = blockLegacy.getLightEmission();
 		table[name] = data;
 		return true;
 	});
@@ -247,20 +246,6 @@ static void generate_level_sound_mapping() {
 	result << std::setw(4) << map << std::endl;
 	result.close();
 	std::cout << "Generated LevelSoundEvent mapping table" << std::endl;
-}
-
-static void generate_particle_mapping() {
-	auto map = nlohmann::json::object();
-
-	auto list = ParticleTypeMap::getParticleNameTypeList();
-	for(auto pair : list) {
-		map[pair.first] = (unsigned int) pair.second;
-	}
-
-	std::ofstream result("mapping_files/particle_id_map.json");
-	result << std::setw(4) << map << std::endl;
-	result.close();
-	std::cout << "Generated Particle mapping table" << std::endl;
 }
 
 static std::string add_prefix_if_necessary(std::string input) {

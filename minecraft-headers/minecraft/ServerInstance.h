@@ -5,7 +5,7 @@
 struct Minecraft;
 
 struct ServerInstance {
-	char filler[128];
+	char filler[144];
 	std::unique_ptr<Minecraft> minecraft;
 
 	Minecraft *getMinecraft() {

@@ -12,9 +12,8 @@ struct NewBlockID {
 
 struct BlockLegacy {
 
-	char paddingParent[32]; //parent struct
+	char paddingParent[128]; //parent struct
 
-	std::string descriptionId;
 	HashedString baseName;
 	std::string namespaceName;
 	HashedString fullName;
@@ -26,12 +25,6 @@ struct BlockLegacy {
 	int flameEncouragement;
 	int flammability;
 	bool lavaFlammable;
-	float hardness;
-	float blastResistance;
-	char padding2[16];
-	float friction;
-
-	char padding3[632];
 
 	Block *getStateFromLegacyData(unsigned short) const;
 	const NewBlockID getBlockID() const;
@@ -40,7 +33,13 @@ struct BlockLegacy {
 		return fullName.str;
 	}
 
+	float getLightEmission(void) const;
+	float getTranslucency(void) const;
+	int getBurnOdds(void) const;
+    int getFlameOdds(void) const;
 	float getDestroySpeed() const;
+	float getExplosionResistance(void) const;
+    float getFriction(void) const;
 
 	virtual ~BlockLegacy();
 
