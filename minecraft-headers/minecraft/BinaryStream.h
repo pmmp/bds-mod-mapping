@@ -4,8 +4,7 @@
 #include "serialize.h"
 
 struct BinaryStream : ReadOnlyBinaryStream {
-	std::string unk11;
-	std::string* unk2;
+	std::string& buffer;
 
 	BinaryStream();
 
@@ -21,4 +20,5 @@ struct BinaryStream : ReadOnlyBinaryStream {
 	}
 };
 
-static_assert(sizeof(BinaryStream) == 88); //correct with libc++ in 1.20.40
+static_assert(offsetof(BinaryStream, buffer) == 64);
+static_assert(sizeof(BinaryStream) == 72);

@@ -12,7 +12,6 @@
 #include <minecraft/LevelSoundEventMap.h>
 #include <minecraft/Memory.h>
 #include <minecraft/Minecraft.h>
-#include <minecraft/NoteBlock.h>
 #include <minecraft/ParticleTypeMap.h>
 #include <minecraft/PrintStream.h>
 #include <minecraft/ServerInstance.h>
@@ -95,7 +94,7 @@ static void generate_old_to_current_palette_map_single(BlockPalette* palette, st
 	auto input = new ReadOnlyBinaryStream(slurp(infile));
 	auto output = new BinaryStream();
 
-	auto length = input->buffer.length();
+	auto length = input->view.length();
 
 	BlockSerializationUtils::clearNBTToBlockCache();
 	while(input->offset < length){
@@ -432,23 +431,6 @@ static void generate_item_tags(ServerInstance *serverInstance) {
 	std::cout << "Generated item tags!" << std::endl;
 }
 
-static void generate_note_instruments(ServerInstance *serverInstance) {
-	std::map<std::string, unsigned int> instruments;
-	for (unsigned int i = 0; i < 256; i++) { //assume this is OK?
-		std::string name = NoteBlock::getSoundName(i);
-		if (instruments.count(name) > 0) {
-			continue;
-		}
-		instruments[name] = i;
-	}
-	nlohmann::json json = instruments;
-	std::ofstream result("mapping_files/note_block_instruments.json");
-	result << std::setw(4) << json << std::endl;
-	result.close();
-
-	std::cout << "Generated note instrument list" << std::endl;
-}
-
 extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	std::filesystem::create_directory("mapping_files");
 	generate_r12_to_current_block_map(serverInstance);
@@ -466,5 +448,4 @@ extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 
 	generate_block_id_to_item_id_map(serverInstance);
 	generate_command_arg_types_table(serverInstance);
-	generate_note_instruments(serverInstance);
 }
