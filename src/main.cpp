@@ -194,8 +194,8 @@ static void generate_block_properties_table(ServerInstance *serverInstance) {
 		data["hardness"] = blockLegacy.getDestroySpeed();
 		data["blastResistance"] = blockLegacy.getExplosionResistance();
 		data["friction"] = blockLegacy.getFriction();
-		data["flammability"] = blockLegacy.getFlameOdds();
-		data["flameEncouragement"] = blockLegacy.getBurnOdds();
+		data["flammability"] = blockLegacy.getBurnOdds();
+		data["flameEncouragement"] = blockLegacy.getFlameOdds();
 		data["opacity"] = 1.0 - blockLegacy.getTranslucency();
 		data["brightness"] = blockLegacy.getLightEmission();
 		table[name] = data;
