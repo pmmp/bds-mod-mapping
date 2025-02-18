@@ -12,7 +12,6 @@
 #include <minecraft/LevelSoundEventMap.h>
 #include <minecraft/Memory.h>
 #include <minecraft/Minecraft.h>
-#include <minecraft/ParticleTypeMap.h>
 #include <minecraft/PrintStream.h>
 #include <minecraft/ServerInstance.h>
 #include <minecraft/VanillaBlockConversion.h>
@@ -423,7 +422,6 @@ extern "C" void modloader_on_server_start(ServerInstance *serverInstance) {
 	generate_blockstate_meta_mapping(serverInstance);
 	generate_biome_mapping(serverInstance);
 	generate_level_sound_mapping();
-	generate_particle_mapping();
 	generate_block_properties_table(serverInstance);
 
 	generate_old_to_current_palette_map(serverInstance);
