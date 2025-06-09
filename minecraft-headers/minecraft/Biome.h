@@ -3,9 +3,10 @@
 #include "HashedString.h"
 
 struct Biome {
-	HashedString name;
 	char filler[354];
 	unsigned short biomeId;
+	char filler2[32]; //mBiomeComponentStorage
+	HashedString name;
 
 	virtual ~Biome(void);
 };

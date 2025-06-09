@@ -187,19 +187,19 @@ static void generate_block_properties_table(ServerInstance *serverInstance) {
 
 	auto table = nlohmann::json::object();
 
-	BlockTypeRegistry::forEachBlock([&table] (const BlockLegacy & blockLegacy)->bool {
-		auto name = blockLegacy.getFullName();
+	for (auto pair : BlockTypeRegistry::mBlockLookupMap) {
+		auto blockLegacy = pair.second.get();
+		auto name = blockLegacy->getFullName();
 		auto data = nlohmann::json::object();
-		data["hardness"] = blockLegacy.getDestroySpeed();
-		data["blastResistance"] = blockLegacy.getExplosionResistance();
-		data["friction"] = blockLegacy.getFriction();
-		data["flammability"] = blockLegacy.getBurnOdds();
-		data["flameEncouragement"] = blockLegacy.getFlameOdds();
-		data["opacity"] = 1.0 - blockLegacy.getTranslucency();
-		data["brightness"] = blockLegacy.getLightEmission();
+		data["hardness"] = blockLegacy->getDestroySpeed();
+		data["blastResistance"] = blockLegacy->getExplosionResistance();
+		data["friction"] = blockLegacy->getFriction();
+		data["flammability"] = blockLegacy->getBurnOdds();
+		data["flameEncouragement"] = blockLegacy->getFlameOdds();
+		data["opacity"] = 1.0 - blockLegacy->getTranslucency();
+		data["brightness"] = blockLegacy->getLightEmission();
 		table[name] = data;
-		return true;
-	});
+	}
 
 	std::ofstream output("mapping_files/block_properties_table.json");
 	output << std::setw(4) << table << std::endl;
