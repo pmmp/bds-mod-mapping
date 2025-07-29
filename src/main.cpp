@@ -1,6 +1,5 @@
 #include <minecraft/BinaryStream.h>
 #include <minecraft/Block.h>
-#include <minecraft/BlockLegacy.h>
 #include <minecraft/BlockPalette.h>
 #include <minecraft/BlockSerializationUtils.h>
 #include <minecraft/BlockTypeRegistry.h>
@@ -183,21 +182,20 @@ static void generate_blockstate_meta_mapping(ServerInstance *serverInstance) {
 
 static void generate_block_properties_table(ServerInstance *serverInstance) {
 	auto palette = serverInstance->getMinecraft()->getLevel()->getBlockPalette();
-	unsigned int numStates = palette->getNumBlockNetworkIds();
 
 	auto table = nlohmann::json::object();
 
-	for (auto pair : BlockTypeRegistry::mBlockLookupMap) {
-		auto blockLegacy = pair.second.get();
-		auto name = blockLegacy->getFullName();
+	for (auto pair : BlockTypeRegistry::mBlockTypeRegistry) {
+		auto block = pair.second.get();
+		auto name = block->getRawNameId();
 		auto data = nlohmann::json::object();
-		data["hardness"] = blockLegacy->getDestroySpeed();
-		data["blastResistance"] = blockLegacy->getExplosionResistance();
-		data["friction"] = blockLegacy->getFriction();
-		data["flammability"] = blockLegacy->getBurnOdds();
-		data["flameEncouragement"] = blockLegacy->getFlameOdds();
-		data["opacity"] = 1.0 - blockLegacy->getTranslucency();
-		data["brightness"] = blockLegacy->getLightEmission();
+		data["hardness"] = block->getDestroySpeed();
+		data["blastResistance"] = block->getExplosionResistance();
+		data["friction"] = block->getFriction();
+		data["flammability"] = block->getBurnOdds();
+		data["flameEncouragement"] = block->getFlameOdds();
+		data["opacity"] = 1.0 - block->getTranslucency();
+		data["brightness"] = block->getLightEmission();
 		table[name] = data;
 	}
 
@@ -351,10 +349,10 @@ static void generate_block_id_to_item_id_map(ServerInstance *serverInstance) {
 		}
 		delete descriptor;
 		if (item == nullptr) {
-			std::cout << "null item ??? " << state->getLegacyBlock().getFullName() << std::endl;
+			std::cout << "null item ??? " << state->getRawNameId() << std::endl;
 			continue;
 		}
-		std::string blockName = state->getLegacyBlock().getFullName();
+		std::string blockName = state->getRawNameId();
 		std::string itemName = item->getFullItemName();
 		map[blockName] = itemName;
 	}

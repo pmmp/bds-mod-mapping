@@ -2,8 +2,8 @@
 
 #include <string>
 
+#include "Block.h"
 #include "Memory.h"
-#include "BlockLegacy.h"
 
 namespace VanillaBlockConversion {
 	int getBlockTypeLegacyIdFromName(std::string const&);
