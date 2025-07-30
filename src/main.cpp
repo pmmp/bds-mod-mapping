@@ -216,7 +216,7 @@ void generate_biome_mapping(ServerInstance *server) {
 
 	registry->forEachBiome([&map] (Biome const&biome) {
 		auto id = biome.biomeId;
-		map[biome.name.str] = id;
+		map[biome.name.str.substr(10)] = id;
 	});
 
 	std::ofstream result("mapping_files/biome_id_map.json");
