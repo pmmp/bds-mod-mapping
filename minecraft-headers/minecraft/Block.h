@@ -1,22 +1,18 @@
 #pragma once
 
-#include "BlockLegacy.h"
+#include "BlockType.h"
 #include "CompoundTag.h"
 
 typedef CompoundTag BlockSerializationId;
 
 struct Block {
-	const BlockLegacy & getLegacyBlock() const {
-		return *blockLegacy;
-	}
-
 	float getDestroySpeed() const;
 
 	virtual ~Block() {}
 
 	char padding[104];
 	unsigned short data;
-	BlockLegacy* blockLegacy;
+	BlockType* blockType;
 
 	char filler2[130];
 	BlockSerializationId tag;

@@ -1,6 +1,6 @@
 #include <minecraft/BinaryStream.h>
 #include <minecraft/Block.h>
-#include <minecraft/BlockLegacy.h>
+#include <minecraft/BlockType.h>
 #include <minecraft/BlockPalette.h>
 #include <minecraft/BlockSerializationUtils.h>
 #include <minecraft/BlockTypeRegistry.h>
@@ -50,6 +50,7 @@ void generate_r12_to_current_block_map(ServerInstance *serverInstance) {
 	auto json = nlohmann::json::object();
 	input >> json;
 
+	BlockTypeRegistry& registry = BlockTypeRegistry::get();
 	for (auto &object : json["minecraft"].items()) {
 		const auto &name = "minecraft:" + object.key();
 
@@ -59,7 +60,7 @@ void generate_r12_to_current_block_map(ServerInstance *serverInstance) {
 				continue;
 			}
 
-			auto block = BlockTypeRegistry::lookupByName(name, state, false);
+			auto block = registry.lookupByName(name, state, false);
 			if (block == nullptr){
 				std::cerr << "No matching blockstate found for " << name << " (THIS IS A BUG)" << std::endl;
 				continue;
@@ -187,17 +188,18 @@ static void generate_block_properties_table(ServerInstance *serverInstance) {
 
 	auto table = nlohmann::json::object();
 
-	for (auto pair : BlockTypeRegistry::mBlockLookupMap) {
-		auto blockLegacy = pair.second.get();
-		auto name = blockLegacy->getFullName();
+	BlockTypeRegistry& registry = BlockTypeRegistry::get();
+	for (auto pair : registry.mBlockLookupMap) {
+		auto blockType = pair.second.get();
+		auto name = blockType->getFullName();
 		auto data = nlohmann::json::object();
-		data["hardness"] = blockLegacy->getDestroySpeed();
-		data["blastResistance"] = blockLegacy->getExplosionResistance();
-		data["friction"] = blockLegacy->getFriction();
-		data["flammability"] = blockLegacy->getBurnOdds();
-		data["flameEncouragement"] = blockLegacy->getFlameOdds();
-		data["opacity"] = 1.0 - blockLegacy->getTranslucency();
-		data["brightness"] = blockLegacy->getLightEmission();
+		data["hardness"] = blockType->getDestroySpeed();
+		data["blastResistance"] = blockType->getExplosionResistance();
+		data["friction"] = blockType->getFriction();
+		data["flammability"] = blockType->getBurnOdds();
+		data["flameEncouragement"] = blockType->getFlameOdds();
+		data["opacity"] = 1.0 - blockType->getTranslucency();
+		data["brightness"] = blockType->getLightEmission();
 		table[name] = data;
 	}
 
@@ -351,10 +353,10 @@ static void generate_block_id_to_item_id_map(ServerInstance *serverInstance) {
 		}
 		delete descriptor;
 		if (item == nullptr) {
-			std::cout << "null item ??? " << state->getLegacyBlock().getFullName() << std::endl;
+			std::cout << "null item ??? " << state->blockType->getFullName() << std::endl;
 			continue;
 		}
-		std::string blockName = state->getLegacyBlock().getFullName();
+		std::string blockName = state->blockType->getFullName();
 		std::string itemName = item->getFullItemName();
 		map[blockName] = itemName;
 	}

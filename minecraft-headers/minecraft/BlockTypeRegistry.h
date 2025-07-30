@@ -2,13 +2,15 @@
 #include <functional>
 #include <map>
 #include "Block.h"
-#include "BlockLegacy.h"
+#include "BlockType.h"
 #include "HashedString.h"
 #include "Memory.h"
 
 struct BlockTypeRegistry{
-	static WeakPtr<BlockLegacy> lookupByName(const HashedString &, bool);
-	static const Block * lookupByName(const HashedString &, int, bool);
+	static BlockTypeRegistry & get(void);
 
-	static std::map<HashedString, SharedPtr<BlockLegacy>> mBlockLookupMap;
+	WeakPtr<BlockType> lookupByName(const HashedString &, bool) const;
+	const Block * lookupByName(const HashedString &, int, bool) const;
+
+	std::map<HashedString, SharedPtr<BlockType>> mBlockLookupMap;
 };

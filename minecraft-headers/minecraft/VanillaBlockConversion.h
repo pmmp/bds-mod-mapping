@@ -3,7 +3,7 @@
 #include <string>
 
 #include "Memory.h"
-#include "BlockLegacy.h"
+#include "Block.h"
 
 namespace VanillaBlockConversion {
 	int getBlockTypeLegacyIdFromName(std::string const&);

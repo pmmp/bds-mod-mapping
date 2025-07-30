@@ -10,7 +10,7 @@ struct NewBlockID {
 	unsigned short value;
 };
 
-struct BlockLegacy {
+struct BlockType {
 
 	char paddingParent[128]; //parent struct
 
@@ -36,12 +36,12 @@ struct BlockLegacy {
 	float getLightEmission(void) const;
 	float getTranslucency(void) const;
 	int getBurnOdds(void) const;
-    int getFlameOdds(void) const;
+	int getFlameOdds(void) const;
 	float getDestroySpeed() const;
 	float getExplosionResistance(void) const;
-    float getFriction(void) const;
+	float getFriction(void) const;
 
-	virtual ~BlockLegacy();
+	virtual ~BlockType();
 
 };
 
