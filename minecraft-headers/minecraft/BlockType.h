@@ -35,8 +35,6 @@ struct BlockType {
 
 	float getLightEmission(void) const;
 	float getTranslucency(void) const;
-	int getBurnOdds(void) const;
-	int getFlameOdds(void) const;
 	float getDestroySpeed() const;
 	float getExplosionResistance(void) const;
 	float getFriction(void) const;
