@@ -196,6 +196,8 @@ static void generate_block_properties_table(ServerInstance *serverInstance) {
 		data["hardness"] = blockType->getDestroySpeed();
 		data["blastResistance"] = blockType->getExplosionResistance();
 		data["friction"] = blockType->getFriction();
+		data["flammability"] = blockType->getDefaultState()->getBurnOdds();
+		data["flameEncouragement"] = blockType->getDefaultState()->getFlameOdds();
 		data["opacity"] = 1.0 - blockType->getTranslucency();
 		data["brightness"] = blockType->getLightEmission();
 		table[name] = data;

@@ -7,6 +7,8 @@ typedef CompoundTag BlockSerializationId;
 
 struct Block {
 	float getDestroySpeed() const;
+	int getFlameOdds(void) const;
+	int getBurnOdds(void) const;
 
 	virtual ~Block() {}
 

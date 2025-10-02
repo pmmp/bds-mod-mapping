@@ -38,6 +38,7 @@ struct BlockType {
 	float getDestroySpeed() const;
 	float getExplosionResistance(void) const;
 	float getFriction(void) const;
+	Block* getDefaultState() const;
 
 	virtual ~BlockType();
 
