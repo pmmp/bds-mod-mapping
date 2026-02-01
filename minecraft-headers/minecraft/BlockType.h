@@ -11,23 +11,11 @@ struct NewBlockID {
 };
 
 struct BlockType {
+	char paddingParent[168]; //parent struct
 
-	char paddingParent[128]; //parent struct
-
-	HashedString baseName;
-	std::string namespaceName;
 	HashedString fullName;
 
-	char padding[156];
-	char unknown;
-	char opacity;
-	char brightness;
-	int flameEncouragement;
-	int flammability;
-	bool lavaFlammable;
-
-	Block *getStateFromLegacyData(unsigned short) const;
-	const NewBlockID getBlockID() const;
+	char padding[776];
 
 	std::string getFullName() const {
 		return fullName.str;
@@ -43,5 +31,3 @@ struct BlockType {
 	virtual ~BlockType();
 
 };
-
-//static_assert(offsetof(BlockLegacy, opacity) == 364);
