@@ -12,10 +12,11 @@ struct Block {
 
 	virtual ~Block() {}
 
-	char padding[80];
-	unsigned short data;
-	BlockType* blockType;
+	char filler1[80];
+	BlockType* blockType; // 88-96
 	char filler2[128];
-	BlockSerializationId tag;
-	char filler3[36];
+	BlockSerializationId tag; // 224-256
+	char filler3[24];
+	unsigned short data; // 280-282
+	char filler4[6];
 };
