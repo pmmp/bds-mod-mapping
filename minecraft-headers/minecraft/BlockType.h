@@ -11,7 +11,7 @@ struct NewBlockID {
 };
 
 struct BlockType {
-	char paddingParent[168]; //parent struct
+	char paddingParent[184]; //parent struct
 
 	HashedString fullName;
 
