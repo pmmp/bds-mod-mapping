@@ -11,7 +11,7 @@ class CompoundTag : public Tag{
 public:
 	using StringView = std::string_view;
 
-	char filler[48];
+	char filler[24];
 
 	CompoundTag(void);
 	CompoundTag(const CompoundTag&);

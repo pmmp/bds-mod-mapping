@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Block.h"
-#include "BlockLegacy.h"
+#include "BlockType.h"
 #include "Item.h"
 
 class ItemDescriptor {
@@ -11,7 +11,7 @@ class ItemDescriptor {
 	public:
 		ItemDescriptor(void);
 		ItemDescriptor(const Block &);
-		ItemDescriptor(const BlockLegacy &);
+		ItemDescriptor(const BlockType &);
 		ItemDescriptor(const Item &, int);
 		ItemDescriptor(const ItemDescriptor &);
 		ItemDescriptor(ItemDescriptor &&);
@@ -21,7 +21,7 @@ class ItemDescriptor {
 		void operator=(ItemDescriptor &&);
 		const Item * getItem(void) const;
 		const Block * getBlock(void) const;
-		const WeakPtr<BlockLegacy> & getLegacyBlock(void) const;
+		const WeakPtr<BlockType const> & getBlockType(void) const;
 		bool isDefinedAsItemName(void) const;
 		bool isValid(bool) const;
 		bool isNull(void) const;
