@@ -27,7 +27,7 @@ struct ItemRegistry : std::enable_shared_from_this<ItemRegistry>{
 		std::vector<std::reference_wrapper<HashedString const>> mSplitNames;
 	};
 
-	char padding[40]; // mCerealContext + mValidator
+	char padding[48]; // mCerealContext + mValidator + mDocumentLoader
 	std::vector<SharedPtr<Item>> mItemRegistry;
 
 	std::unordered_map<int, WeakPtr<Item>> mIdToItemMap;
